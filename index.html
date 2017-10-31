@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Currency Game</title>
+
+    <!-- Added link to the jQuery Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Added a link to Bootstrap-->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <link rel="stylesheet" href=assets/css/style.css>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 id="headline" align="center"><b>Match the Currency!</b></h1>
+            <hr>
+            <p align=center>You will be given a random target currency number at the start of the game.</p>
+            <p align=center>There are four currencies below. By clicking on a currency you will add a specific amount of money to your total
+                currency.
+            </p>
+            <p align=center>You win the game by matching your total currency to the exact target currency number. You lose the game if your
+                total currency goes above the exact target currency.</p>
+            <p align=center>The value of each currency is hidden from you until you click on it.</p>
+            <p align=center>Each time when the game starts, the game will change the values of each currency.</p>
+        </div>
+        <div class="row">
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default one">
+                    <img class="size" src=https://justbebeth.files.wordpress.com/2013/09/us_currency-1246rxp.jpg>
+                </button>
+                <button type="button" class="btn btn-default two">
+                    <img class="size" src=https://previews.123rf.com/images/vinntom/vinntom1104/vinntom110400010/9262318-Euro-Money-Banknotes-Stock-Photo-currency.jpg>
+                </button>
+                <button type="button" class="btn btn-default three">
+                    <img class="size" src=http://goldium.net/2013update/GBP%20BANK%20NOTES.jpg>
+                </button>
+                <button type="button" class="btn btn-default four">
+                    <img class="size" src=http://mariosingh.com/wp-content/uploads/2014/10/Yen.jpg>
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 align=center class="panel-title currency"><b>Your Total Currency</b></h3>
+                </div>
+                <div class="panel-body">
+                    <h1 align=center id="result"></h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 align=center class="panel-title currency"><b>Exact Target Currency</b></h3>
+                </div>
+                <div class="panel-body">
+                    <h1 align=center id="target"></h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 align=center class="panel-title">Wins: </h1>
+                    <h1 align=center id="wins"></h1>
+                    <h3 align=center class="panel-title">Losses: </h3>
+                    <h1 align=center id="losses"></h1>
+                    <p align="right">
+                        <a class="btn btn-primary btn-md reset" href="#" role="button">Reset Score</a>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var winsCount = 0;
+        var lossCount = 0;
+        var totalScore = 0;
+        var targetNumber = Math.floor(Math.random() * 101) + 19;
+        var currencyValue1 = Math.floor(Math.random() * 12) + 1;
+        var currencyValue2 = Math.floor(Math.random() * 12) + 1;
+        var currencyValue3 = Math.floor(Math.random() * 12) + 1;
+        var currencyValue4 = Math.floor(Math.random() * 12) + 1;
+
+        var resetScore = function () {
+            $("#wins").html(winsCount = 0)
+            $("#losses").html(lossCount = 0)
+        }
+
+        function checkScore() {
+            if (totalScore === targetNumber) {
+                winsCount++;
+                $("#wins").html(winsCount);
+                totalScore = 0;
+                $("#result").html("You got lucky!");
+                targetNumber = Math.floor(Math.random() * 101) + 19;
+                currencyValue1 = Math.floor(Math.random() * 12) + 1;
+                currencyValue2 = Math.floor(Math.random() * 12) + 1;
+                currencyValue3 = Math.floor(Math.random() * 12) + 1;
+                currencyValue4 = Math.floor(Math.random() * 12) + 1;
+                $("#target").html(targetNumber);
+            }
+
+            if (totalScore > targetNumber) {
+                lossCount++;
+                $("#losses").html(lossCount);
+                totalScore = 0;
+                $("#result").html("You suck!");
+                targetNumber = Math.floor(Math.random() * 101) + 19;
+                currencyValue1 = Math.floor(Math.random() * 12) + 1;
+                currencyValue2 = Math.floor(Math.random() * 12) + 1;
+                currencyValue3 = Math.floor(Math.random() * 12) + 1;
+                currencyValue4 = Math.floor(Math.random() * 12) + 1;
+                $("#target").html(targetNumber);
+            }
+        }
+
+        $("#result").html(totalScore);
+        $("#target").html(targetNumber);
+        $("#wins").html(winsCount);
+        $("#losses").html(lossCount);
+
+        $(".one").click(function () {
+            totalScore += currencyValue1;
+            $("#result").html(totalScore);
+            checkScore();
+        });
+
+        $(".two").click(function () {
+            totalScore += currencyValue2;
+            $("#result").html(totalScore);
+            checkScore();
+        });
+
+        $(".three").click(function () {
+            totalScore += currencyValue3;
+            $("#result").html(totalScore);
+            checkScore();
+        });
+
+        $(".four").click(function () {
+            totalScore += currencyValue4;
+            $("#result").html(totalScore);
+            checkScore();
+        });
+
+        $(".reset").click(function (event) {
+            event.preventDefault();
+            resetScore();
+        });
+
+    </script>
+
+</body>
+
+</html>
